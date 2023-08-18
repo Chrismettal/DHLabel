@@ -36,12 +36,11 @@ Might be pushed to Pypi later idk.
 
 ## Usage
 
-Execute `dhlabel` in the folder containing your downloaded labels fresh from DHL. Alternatively, specify the target path after the command like `dhlabel /path/to/source/pdfs`.
+Execute `dhlabel` in the folder containing your downloaded labels fresh from DHL. Alternatively, specify the source and target paths after the command like `dhlabel /path/to/source/pdf/folder /path/to/target/pdf/folder`.
 
-It should automatically detect national and international orders based on the number of pages in the original document and attempt to use as little pages as possible for your orders (First dumping each international order into one PDF page, before using half a page per national order)
+It will automatically detect national and international orders based on the number of pages in the original document and attempt to use as little pages as possible for your orders (First dumping each international order into one PDF page, before using half a page per national order). 
 
-2 files, `DHLabel_YYYY-MM-DD.pdf` and `DHLabel_YY-MM-DD.csv` will be created after completion, where the PDF contains all your labels in one file, and the CSV is a list of recipients and their tracking numbers.
-
+2 files, `DHLabels_YYYY-MM-DD.pdf` and `DHLabels_YY-MM-DD.csv` will be created after completion, where the PDF contains all your labels in one file, and the CSV is a list of recipients and their tracking numbers.
 
 ## Roadmap
 
@@ -53,7 +52,7 @@ It should automatically detect national and international orders based on the nu
 
 ## Donations
 
-**If you like my work please consider [supporting my caffeine addiction](https://gitlab.com/Chrismettal#donations)!**
+**If you like my work please consider [supporting me](https://github.com/Chrismettal#donations)!**
 
 ## License
 
