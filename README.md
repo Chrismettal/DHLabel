@@ -49,6 +49,7 @@ It will automatically detect national and international orders based on the numb
 - [x] Find list of files
   - [x] Detect national vs international order
 - [x] Append multiple orders into the same file
+- [ ] Optionally shrink parts down to fit on smaller than A5 packages
 
 ## Donations
 
