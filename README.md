@@ -1,4 +1,4 @@
-# Splive <!-- omit in toc -->
+# DHLabel <!-- omit in toc -->
 
 [![PyPI - Version](https://img.shields.io/pypi/v/dhlabel?style=flat-square)](https://pypi.org/project/dhlabel/)
 [![Repo Version](https://img.shields.io/github/v/tag/chrismettal/dhlabel?label=RepoVersion&style=flat-square)](https://github.com/Chrismettal/DHLabel)

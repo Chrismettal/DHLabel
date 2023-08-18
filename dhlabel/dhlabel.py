@@ -72,7 +72,7 @@ def argset():
         sys.exit()
 
     # Assemble output file path without file extension
-    output_files = output_path + "/" + output_files
+    output_files = os.path.join(output_path, output_files)
 
 
 def read_file_list(input_path):
