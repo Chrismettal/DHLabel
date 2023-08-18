@@ -46,9 +46,9 @@ It should automatically detect national and international orders based on the nu
 ## Roadmap
 
 - [x] Consolidate international labels into one page
-- [ ] Consolidate 2 national labels into one page
+- [x] Consolidate 2 national labels into one page
 - [x] Find list of files
-  - [ ] Detect national vs international order
+  - [x] Detect national vs international order
 - [x] Append multiple orders into the same file
 
 ## Donations

@@ -89,12 +89,24 @@ def splice_files(file_path_list, output_files):
     Create consolidated pdf
     """
     global today
-    currentPage         = 0
+    currentPage = 0
+    national_file_path_list      = []
+    international_file_path_list = []
 
-    ### Start looping through found pages
     writer = PdfWriter()
 
+    # Split into national / international labels by page count 
+    # (Only international orders have the CN22/CN23 as a second page)
     for inputFile in file_path_list:
+        reader = PdfReader(inputFile)
+
+        if len(reader.pages) > 1:
+            international_file_path_list.append(inputFile)
+        else:
+            national_file_path_list.append(inputFile)
+
+    # Loop through international labels
+    for inputFile in international_file_path_list:
 
         # Create and load readers/writers
         reader = PdfReader(inputFile)
@@ -150,7 +162,7 @@ def splice_files(file_path_list, output_files):
         # Print successful recipient + Sendungsnummer
         print(recipient + " - (" + sendungsNummer + ")")
 
-        # Dump reportfile
+        # Append reportfile
         reportFile = output_files + ".csv"
         with open(reportFile, 'a') as rf:
             rf.write(recipient)
@@ -160,7 +172,72 @@ def splice_files(file_path_list, output_files):
 
         currentPage = currentPage + 1
 
-    ### End looping through found pages
+    ### End looping through international labels
+
+    
+
+    # Loop through national labels
+    currentPage = 0
+    for inputFile in national_file_path_list:
+
+        # Create and load readers/writers
+        reader = PdfReader(inputFile)
+
+        # Get recipient name from filename
+        inputFileSplit = os.path.basename(inputFile).split("_")
+        recipient = inputFileSplit[2] + " " + inputFileSplit[3].split(".")[0]
+
+        # Collect pages
+        pageAdress  = reader.pages[0]
+
+        # Find tracking number in pdf text
+        extractedText       = pageAdress.extract_text((0, 90))
+        sendungsNummerPos   = extractedText.find("Sendungsnr.:")
+        rightHalfText       = extractedText[sendungsNummerPos+13:]
+        newLinePos          = rightHalfText.find("\n")
+        sendungsNummer      = rightHalfText[:newLinePos]
+
+        # Crop page
+        pageAdress.cropbox  = RectangleObject((0, (PaperSize.A4.height/2 + 20), PaperSize.A4.width, PaperSize.A4.height))
+
+        # On even pages (starting with 0):
+        if (currentPage % 2) == 0:
+            # Create a new destination page
+            destpage = writer.add_blank_page(width=PaperSize.A4.width, height=PaperSize.A4.height)
+            # Merge page into upper part of dest page
+            destpage.merge_transformed_page(
+                    pageAdress,
+                    Transformation().translate(
+                        0,
+                        0,
+                    ),
+                )
+                
+        # On uneven pages:
+        else:
+            # Merge page into lower part of dest page
+            destpage.merge_transformed_page(
+                    pageAdress,
+                    Transformation().translate(
+                        0,
+                        -PaperSize.A4.height/2,
+                    ),
+                )
+
+        # Print successful recipient + Sendungsnummer
+        print(recipient + " - (" + sendungsNummer + ")")
+
+        # Append reportfile
+        reportFile = output_files + ".csv"
+        with open(reportFile, 'a') as rf:
+            rf.write(recipient)
+            rf.write(";")
+            rf.write(sendungsNummer)
+            rf.write(";\n")
+
+        currentPage = currentPage + 1
+
+    ### End looping through national labels
 
     # Write resulting PDF
     outputname = output_files + ".pdf"
