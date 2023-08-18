@@ -23,12 +23,15 @@ Might be pushed to Pypi later idk.
 ### Local (for development)
 
 - Clone the repo:
+
 `git clone https://github.com/chrismettal/dhlabel`
 
-- Change directory into said cloned repo
+- Change directory into said cloned repo:
+
 `cd dhlabel`
 
-- Install in "editable" mode
+- Install in "editable" mode:
+
 `pip install -e .`
 
 ## Usage
